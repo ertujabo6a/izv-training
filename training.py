@@ -12,6 +12,13 @@ from numpy.typing import NDArray
 import matplotlib.pyplot as plt
 from typing import List, Callable, Dict, Any
 
+"""
+The aim of this function is to numerically calculate the integral using the approximate so-called rectangle method. 
+You will receive, as input, a function f 
+(compatible with NumPy, taking one NumPy array as input and returning a NumPy array of the same size; no testing is required), 
+the start and end of the interval a and b, and an optional number of steps steps. If not set, steps will default to 1000. 
+The function will return the value of the definite integral calculated according to the rectangle method formula.
+"""
 def integrate(f: Callable[[np.ndarray], np.ndarray], a: float, b: float, steps=1000) -> float:
     # Generate points on a linear distribution from 'a' to 'b'
     x_values = np.linspace(a, b, steps)
@@ -27,6 +34,16 @@ def integrate(f: Callable[[np.ndarray], np.ndarray], a: float, b: float, steps=1
 
     return integral_value
 
+"""
+The aim of generate_graph is to vizualise graph of the function f_a(x) = a^2 * x^3 * sin(x) defined in the range <-3, 3>. 
+Generate the function values for all values of 'a' specified in the input argument (represented as a list of floating-point numbers) 
+without using loops (i.e., using broadcasting). Then, visualize this matrix row by row to create the following graph. 
+For setting display ranges, labels, and similar parameters, you can assume that a = [1.0, 1.5, 2.0]. 
+Ensure the LaTeX style for axis labels and individual lines. Calculate the integral values using the trapz function in numpy.
+The generate_graph function has two additional arguments - a boolean value 'show_figure'
+that determines whether the graph should be displayed using the show() function and 'save_path' 
+which (if specified) determines where the graph should be saved using the savefig() function.
+"""
 def generate_graph(a: List[float], show_figure: bool = False, save_path: str | None = None):
     # 'a' values fo calculation
     a_values = np.array([1.0, 1.5, 2.0])
@@ -63,6 +80,12 @@ def generate_graph(a: List[float], show_figure: bool = False, save_path: str | N
     if show_figure:
         plt.show()
 
+"""
+Create a graph with three subplots displaying the functions f1, f2, and the sum f1+f2 within the range 𝑡 ∈ <0,100>. 
+In the third subplot, there will be a section where the value of the sum of both functions exceeds the value of the function f1. 
+This section should be shown in green, otherwise in red.  
+The conditions for the arguments show_figure and save_path are the same as in the second task.
+"""
 def generate_sinus(show_figure: bool = False, save_path: str | None = None):
     # Create time values from 0 to 100
     t = np.linspace(0, 100, 1000)
@@ -108,6 +131,19 @@ def generate_sinus(show_figure: bool = False, save_path: str | None = None):
     if show_figure:
         plt.show()
 
+"""
+From the website https://ehw.fit.vutbr.cz/izv/stanice.html, download meteorological stations. 
+This is a copy of the CHMI website, and it is prohibited to connect to the official CHMI website. 
+The URL from which you are downloading may be stored in the code. You don't have to work directly with this page 
+(for example, using the Network panel in a web browser, you can see that the pages are handled in a relatively "original" style). 
+For each row of the table, create a dictionary record with the following structure: 
+{'position': 'Cheb', 'lat': 50.0683, 'long': 12.3913, 'height': 483.0}. 
+The function's output will be a list containing records (dictionaries) for individual rows. 
+The validity of the output format is tested in a basic way, even in the provided unittest. 
+You can assume that the structure of the web pages will not change, 
+but it is mandatory to perform your own data retrieval from the website https://ehw.fit.vutbr.cz/izv, 
+and it is strictly forbidden to access the CHMI website.
+"""
 def download_data() -> List[Dict[str, Any]]:
     # URL from which you are downloading the data
     url = "https://ehw.fit.vutbr.cz/izv/stanice.html"
