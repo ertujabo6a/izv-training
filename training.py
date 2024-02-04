@@ -62,3 +62,48 @@ def generate_graph(a: List[float], show_figure: bool = False, save_path: str | N
     
     if show_figure:
         plt.show()
+
+def generate_sinus(show_figure: bool = False, save_path: str | None = None):
+    # Create time values from 0 to 100
+    t = np.linspace(0, 100, 1000)
+
+    # Calculate the values of f1, f2, and their sum
+    f1_values = 0.5 * np.cos(1/50 * np.pi * t)
+    f2_values = 0.25 * (np.sin(np.pi * t) + np.sin(3/2 * np.pi * t))
+    sum_values = f1_values + f2_values
+
+    # Create subplots with specific layout
+    fig, axes = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
+
+    # Plot f1 in the first subplot
+    axes[0].plot(t, f1_values)
+    axes[0].set_xlabel('t')
+    axes[0].set_ylabel('$f_1(t)$')
+    axes[0].grid(True)
+
+    # Plot f2 in the second subplot
+    axes[1].plot(t, f2_values)
+    axes[1].set_xlabel('t')
+    axes[1].set_ylabel('$f_2(t)$')
+    axes[1].grid(True)
+
+    # Plot the sum and highlight regions where the sum is above f1 in green
+    plt.fill_between(t, f1_values, sum_values, where=(sum_values > f1_values), color='green')
+    plt.fill_between(t, f1_values, sum_values, where=(sum_values <= f1_values), color='red')
+    axes[2].set_xlabel('t')
+    axes[2].set_ylabel('$f_1(t)$ + $f_2(t)$')
+    axes[2].grid(True)
+
+    # Customize the x-axis ticks to match the provided example
+    for ax in axes:
+        ax.set_xticks(np.arange(0, 101, 20))
+        ax.set_xticklabels(['0', '20', '40', '60', '80', '100'])
+
+    # Adjust spacing between subplots
+    plt.tight_layout()
+
+    if save_path:
+        plt.savefig(save_path)
+
+    if show_figure:
+        plt.show()
